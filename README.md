@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StitchFlow Studio
 
-## Getting Started
+A polished demonstration order-management workspace for a Nigerian bespoke tailoring studio. Built for the **“If I Owned This Business...”** TikTok series.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. The sample tracking experience is linked from the landing page and the owner dashboard is at `/dashboard`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Open `/dashboard` to see 12 fictional active and recent orders.
+2. Open **Amara Okafor — Embroidered Agbada Set** (`SF-2401`).
+3. Change the stage from **Fabric cut** to **Sewing in progress** and save the update.
+4. Copy the tracking link or open the customer page.
+5. The tracking page shows the saved status, delivery date, latest customer-visible update and WhatsApp contact action.
+6. Return to the dashboard to review due-soon and overdue orders.
 
-## Learn More
+## Local persistence
 
-To learn more about Next.js, take a look at the following resources:
+Orders are stored in `localStorage` through the repository abstraction in `src/lib/repository.ts`. Data belongs only to the current browser profile. It does **not** synchronize across browsers, devices or users. “Reset demo data” restores the original 12 seeded orders.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The WhatsApp button opens a deep link with a prefilled message. It never claims or assumes a message was sent. The clearly fictional demo number is configured as `DEMO_WHATSAPP_NUMBER` in `src/app/track/[token]/page.tsx` and should be replaced for a real studio.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Prototype and security limitations
 
-## Deploy on Vercel
+This is a client-side prototype, not a production order system:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- The owner dashboard has no authentication.
+- Opaque random tracking tokens and client-side storage do not provide production security.
+- Public tracking pages intentionally omit phone numbers, measurements, payment values and private studio notes.
+- A real deployment requires a server-side database, authenticated owner accounts, authorization checks, secure token handling, input validation and server-side access controls.
+- Sensitive tailoring records and payments should never rely on `localStorage` or public client-side code.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Checks
+
+```bash
+npm run lint
+npm run build
+```

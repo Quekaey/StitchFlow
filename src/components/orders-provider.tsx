@@ -1,0 +1,8 @@
+"use client";
+import { createContext,useCallback,useContext,useEffect,useMemo,useState } from "react";
+import { orderRepository } from "@/lib/repository";
+import type { Order,OrderInput,ProductionStage } from "@/lib/types";
+type Store={orders:Order[];ready:boolean;create:(input:OrderInput)=>Order;update:(id:string,patch:Partial<Order>)=>Order;updateStage:(id:string,stage:ProductionStage,message:string)=>Order;reset:()=>void};
+const Context=createContext<Store|null>(null);
+export function OrdersProvider({children}:{children:React.ReactNode}){const[orders,setOrders]=useState<Order[]>([]),[ready,setReady]=useState(false);useEffect(()=>{const frame=requestAnimationFrame(()=>{setOrders(orderRepository.list());setReady(true)});return()=>cancelAnimationFrame(frame)},[]);const create=useCallback((input:OrderInput)=>{const result=orderRepository.create(input);setOrders(orderRepository.list());return result},[]);const update=useCallback((id:string,patch:Partial<Order>)=>{const result=orderRepository.update(id,patch);setOrders(orderRepository.list());return result},[]);const updateStage=useCallback((id:string,stage:ProductionStage,message:string)=>{const result=orderRepository.updateStage(id,stage,message);setOrders(orderRepository.list());return result},[]);const reset=useCallback(()=>setOrders(orderRepository.reset()),[]);const value=useMemo(()=>({orders,ready,create,update,updateStage,reset}),[orders,ready,create,update,updateStage,reset]);return <Context.Provider value={value}>{children}</Context.Provider>}
+export function useOrders(){const value=useContext(Context);if(!value)throw new Error("useOrders must be used inside OrdersProvider");return value}
