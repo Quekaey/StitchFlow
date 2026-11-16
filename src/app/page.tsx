@@ -1,8 +1,171 @@
 import Link from "next/link";
-import { ArrowRight,Check,MessageCircle,Scissors,Sparkles } from "lucide-react";
-import { Button,DemoBadge } from "@/components/ui";
-const steps=["Order confirmed","Fabric cut","Sewing in progress","Ready for pickup"];
-export default function Home(){return <main className="min-h-screen overflow-hidden bg-[#f8f5ed] noise"><nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-6 lg:px-10"><Link href="/" className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-full bg-[#153f34] text-[#e4c987]"><Scissors className="size-4"/></span><span><b className="block font-serif text-xl leading-none">StitchFlow</b><small className="text-[9px] font-bold uppercase tracking-[.25em] text-[#7c827e]">Studio</small></span></Link><div className="flex items-center gap-3"><DemoBadge/><Button asChild className="hidden sm:inline-flex"><Link href="/dashboard">Open dashboard <ArrowRight className="size-4"/></Link></Button></div></nav>
-<section className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-12 lg:grid-cols-[1.05fr_.95fr] lg:px-10 lg:pb-32 lg:pt-20"><div className="rise relative z-10"><span className="mb-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.2em] text-[#876728]"><Sparkles className="size-4"/>Bespoke, minus the back-and-forth</span><h1 className="max-w-3xl font-serif text-[clamp(3.6rem,8vw,7.7rem)] font-semibold leading-[.82] tracking-[-.055em] text-[#17201c]">Every stitch.<br/><em className="font-medium text-[#2d6655]">Beautifully</em><br/>organized.</h1><p className="mt-8 max-w-xl text-base leading-8 text-[#626a65] lg:text-lg">A simple studio workspace for managing bespoke orders, production stages and customer updates, without another “Is my outfit ready?” message.</p><div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button asChild size="lg"><Link href="/dashboard">Explore owner dashboard <ArrowRight className="size-4"/></Link></Button><Button asChild size="lg" variant="secondary"><Link href="/track/a7f3c92e8b4d1f60aa27e9c1">View sample tracking</Link></Button></div><p className="mt-5 text-xs text-[#8b8e8a]">Prototype experience · Browser-local demo data</p></div>
-<div className="rise relative mx-auto w-full max-w-xl [animation-delay:.15s]"><div className="absolute -inset-10 rounded-full bg-[#d4bd83]/20 blur-3xl"/><div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#12382f] p-5 text-white shadow-[0_35px_90px_rgba(20,52,43,.28)] sm:p-8 grid-pattern"><div className="flex items-start justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#d7c38f]">Order progress</p><h2 className="mt-2 font-serif text-3xl">Amara&apos;s Agbada</h2></div><span className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">Due in 2 days</span></div><div className="my-8 rounded-[24px] bg-[#f8f5ed] p-6 text-[#202722]"><div className="mb-7 flex items-center gap-4"><span className="grid size-11 place-items-center rounded-full bg-[#d9c18b] font-serif text-lg font-bold text-[#153f34]">AO</span><div><b className="block">Embroidered Agbada Set</b><span className="text-xs text-[#7a7f7b]">Order SF-2401</span></div></div><div>{steps.map((s,i)=><div className="flex gap-4" key={s}><div className="flex flex-col items-center"><span className={`grid size-7 place-items-center rounded-full ${i<3?"bg-[#153f34] text-white":"border border-[#c9c9c1] text-transparent"}`}>{i<3&&<Check className="size-3.5"/>}</span>{i<steps.length-1&&<span className={`h-9 w-px ${i<2?"bg-[#153f34]":"bg-[#d8d7cf]"}`}/>}</div><span className={`pt-1 text-xs font-semibold ${i===2?"text-[#153f34]":"text-[#7b807c]"}`}>{s}</span></div>)}</div></div><div className="flex items-center gap-3 rounded-2xl border border-white/10 p-4"><MessageCircle className="size-5 text-[#d7c38f]"/><p className="text-xs leading-5 text-white/70">Customers see the latest approved update, delivery date and a direct studio contact.</p></div></div></div></section>
-<section className="border-y border-[#173d33]/10 bg-[#eee8dc]"><div className="mx-auto grid max-w-7xl gap-px px-5 py-16 md:grid-cols-3 lg:px-10">{[["01","Manage the work","Orders, deposits, deadlines and studio notes in one calm workspace."],["02","Update once","Move an order through production and add a clear customer-facing update."],["03","Let clients check","A private-looking tracking link shows progress without exposing sensitive details."]].map(([n,t,d])=><div className="border-[#183e34]/10 py-6 md:border-l md:px-10 first:border-l-0" key={n}><span className="font-serif text-2xl text-[#a88648]">{n}</span><h3 className="mt-5 font-serif text-3xl font-semibold">{t}</h3><p className="mt-3 text-sm leading-7 text-[#69706c]">{d}</p></div>)}</div></section><footer className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-xs text-[#777d79] sm:flex-row sm:items-center sm:justify-between lg:px-10"><span>StitchFlow Studio · Bespoke tailoring, beautifully organized.</span><span>Concept prototype for “If I Owned This Business...”</span></footer></main>}
+import {
+  ArrowRight,
+  Check,
+  MessageCircle,
+  Scissors,
+  Sparkles,
+} from "lucide-react";
+import { Button } from "@/components/ui";
+const steps = [
+  "Order confirmed",
+  "Fabric cut",
+  "Sewing in progress",
+  "Ready for pickup",
+];
+export default function Home() {
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#f8f5ed] noise">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-6 lg:px-10">
+        <Link href="/" className="flex items-center gap-3">
+          <span className="grid size-10 place-items-center rounded-full bg-[#153f34] text-[#e4c987]">
+            <Scissors className="size-4" />
+          </span>
+          <span>
+            <b className="block font-serif text-xl leading-none">StitchFlow</b>
+            <small className="text-[9px] font-bold uppercase tracking-[.25em] text-[#7c827e]">
+              Studio
+            </small>
+          </span>
+        </Link>
+        <div className="flex items-center gap-3">
+          <Button asChild className="hidden sm:inline-flex">
+            <Link href="/dashboard">
+              Open dashboard <ArrowRight className="size-4" />
+            </Link>
+          </Button>
+        </div>
+      </nav>
+      <section className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-12 lg:grid-cols-[1.05fr_.95fr] lg:px-10 lg:pb-32 lg:pt-20">
+        <div className="rise relative z-10">
+          <span className="mb-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.2em] text-[#876728]">
+            <Sparkles className="size-4" />
+            Bespoke, minus the back-and-forth
+          </span>
+          <h1 className="max-w-3xl font-serif text-[clamp(3.6rem,8vw,7.7rem)] font-semibold leading-[.82] tracking-[-.055em] text-[#17201c]">
+            Every stitch.
+            <br />
+            <em className="font-medium text-[#2d6655]">Beautifully</em>
+            <br />
+            organized.
+          </h1>
+          <p className="mt-8 max-w-xl text-base leading-8 text-[#626a65] lg:text-lg">
+            A simple studio workspace for managing bespoke orders, production
+            stages and customer updates, without another “Is my outfit ready?”
+            message.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/dashboard">
+                Explore owner dashboard <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link href="/track/a7f3c92e8b4d1f60aa27e9c1">
+                View sample tracking
+              </Link>
+            </Button>
+          </div>
+          <p className="mt-5 text-xs text-[#8b8e8a]">
+            Prototype experience · Browser-local demo data
+          </p>
+        </div>
+        <div className="rise relative mx-auto w-full max-w-xl [animation-delay:.15s]">
+          <div className="absolute -inset-10 rounded-full bg-[#d4bd83]/20 blur-3xl" />
+          <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#12382f] p-5 text-white shadow-[0_35px_90px_rgba(20,52,43,.28)] sm:p-8 grid-pattern">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#d7c38f]">
+                  Order progress
+                </p>
+                <h2 className="mt-2 font-serif text-3xl">
+                  Amara&apos;s Agbada
+                </h2>
+              </div>
+              <span className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">
+                Due in 2 days
+              </span>
+            </div>
+            <div className="my-8 rounded-[24px] bg-[#f8f5ed] p-6 text-[#202722]">
+              <div className="mb-7 flex items-center gap-4">
+                <span className="grid size-11 place-items-center rounded-full bg-[#d9c18b] font-serif text-lg font-bold text-[#153f34]">
+                  AO
+                </span>
+                <div>
+                  <b className="block">Embroidered Agbada Set</b>
+                  <span className="text-xs text-[#7a7f7b]">Order SF-2401</span>
+                </div>
+              </div>
+              <div>
+                {steps.map((s, i) => (
+                  <div className="flex gap-4" key={s}>
+                    <div className="flex flex-col items-center">
+                      <span
+                        className={`grid size-7 place-items-center rounded-full ${i < 3 ? "bg-[#153f34] text-white" : "border border-[#c9c9c1] text-transparent"}`}
+                      >
+                        {i < 3 && <Check className="size-3.5" />}
+                      </span>
+                      {i < steps.length - 1 && (
+                        <span
+                          className={`h-9 w-px ${i < 2 ? "bg-[#153f34]" : "bg-[#d8d7cf]"}`}
+                        />
+                      )}
+                    </div>
+                    <span
+                      className={`pt-1 text-xs font-semibold ${i === 2 ? "text-[#153f34]" : "text-[#7b807c]"}`}
+                    >
+                      {s}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl border border-white/10 p-4">
+              <MessageCircle className="size-5 text-[#d7c38f]" />
+              <p className="text-xs leading-5 text-white/70">
+                Customers see the latest approved update, delivery date and a
+                direct studio contact.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="border-y border-[#173d33]/10 bg-[#eee8dc]">
+        <div className="mx-auto grid max-w-7xl gap-px px-5 py-16 md:grid-cols-3 lg:px-10">
+          {[
+            [
+              "01",
+              "Manage the work",
+              "Orders, deposits, deadlines and studio notes in one calm workspace.",
+            ],
+            [
+              "02",
+              "Update once",
+              "Move an order through production and add a clear customer-facing update.",
+            ],
+            [
+              "03",
+              "Let clients check",
+              "A private-looking tracking link shows progress without exposing sensitive details.",
+            ],
+          ].map(([n, t, d]) => (
+            <div
+              className="border-[#183e34]/10 py-6 md:border-l md:px-10 first:border-l-0"
+              key={n}
+            >
+              <span className="font-serif text-2xl text-[#a88648]">{n}</span>
+              <h3 className="mt-5 font-serif text-3xl font-semibold">{t}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#69706c]">{d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <footer className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-xs text-[#777d79] sm:flex-row sm:items-center sm:justify-between lg:px-10">
+        <span>
+          StitchFlow Studio · Bespoke tailoring, beautifully organized.
+        </span>
+        <span>Concept prototype for “If I Owned This Business...”</span>
+      </footer>
+    </main>
+  );
+}
